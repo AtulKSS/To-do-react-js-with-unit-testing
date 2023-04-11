@@ -11,7 +11,7 @@ function App() {
       setListTodo([...listTodo,inputText]); //add input text to the list
     }
     else{
-      alert("Please enter valid to-do with at least 3 characters"); //alert shows an message if input is invalid
+      alert("Please enter valid task with at least 3 characters"); //alert shows an message if input is invalid
     }
   }
 

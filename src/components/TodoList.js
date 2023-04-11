@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 function Todolist(props) {
   const [editMode, setEditMode] = useState(false);
   const [newValue, setNewValue] = useState(props.item);
+  const [todo, settodo] = useState({ value: '', error: '', });
 
   const handleInputChange = (event) => {  //updates the newValue state to the current value of the input field, helps us to see what we are tying
     setNewValue(event.target.value); //event.target.value expression retrieves the current value of the input field
@@ -13,16 +14,18 @@ function Todolist(props) {
   };
 
   const handleSaveClick = () => {
-    if (!newValue || newValue.length < 3) { // check if the new value is empty or has less than 3 characters
-      alert('Please enter valid to-do with at least 3 characters.'); // show an alert message if the validation fails
-      return; // return without saving the changes
+    if (!newValue || newValue.length < 3) {
+      settodo({ ...todo, error: 'Please Enter a valid To-Do' });
+      return;
+    } else {
+      settodo({ ...todo, error: '' }); // clear the error message
     }
     props.editList(props.index, newValue);
     setEditMode(false);
   };
 
   return (
-    <li className="list-item">
+    <li className="list-item" style={{ position: 'relative', marginBottom: '10px' }}>
     {!editMode && (
       <>
         {props.item}
@@ -33,26 +36,31 @@ function Todolist(props) {
           ></i>
         </span>
         <span className="iconss">
-          <i
-            className="fa-solid fa-pen-to-square"
-            onClick={handleEditClick}
-          ></i>
+          <i className="fa-solid fa-pen-to-square" onClick={handleEditClick}></i>
         </span>
+        {todo.error && (
+          <div className="error" style={{ position: 'absolute', top: '100%' }}>
+            {todo.error}
+          </div>
+        )}
       </>
     )}
     {editMode && (
       <>
-        <input
-          type="text"
-          value={newValue}
-          onChange={(e) => handleInputChange(e)} //Handled impu change.
-        />
+        <input type="text" value={newValue} onChange={handleInputChange} />
         <span className="icons">
           <i className="fa-solid fa-check" onClick={handleSaveClick}></i>
         </span>
+        {todo.error && (
+          <div className="error" style={{ position: 'absolute', top: '100%' }}>
+            {todo.error}
+          </div>
+        )}
       </>
     )}
   </li>
+
+
   )
 }
 
