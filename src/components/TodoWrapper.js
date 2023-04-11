@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import "./App.css"
 const TodoWrapper = () => {
     const [listTodo,setListTodo]=useState([]);  //List initiated by Blank array
+    
   let addList = (inputText)=>{
     if(inputText!==''&& inputText.trim().length >= 3){
       setListTodo([...listTodo,inputText]); //add input text to the list

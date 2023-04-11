@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import { NavLink } from "react-bootstrap";
 
 
 function TodoInput(props) {
   const [inputText, setInputText] = useState(""); //created state to store tasks on runtime.
   const [todo, setTodo] = useState({ value: "", error: "" });
 
-  const handleAddClick = () => {
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
     if (!inputText || inputText.length < 3) {
       setTodo({ ...todo, error: "Please Enter a valid To-Do" });
       return;
@@ -17,6 +19,14 @@ function TodoInput(props) {
       setTodo({ ...todo, error: "" }); // clear the error message
     }
     props.addList(inputText);
+    axios.post(
+      "https://6433e738582420e2316e849e.mockapi.io/crud",{
+        text : inputText,
+      })
+      .then((response) => {
+        console.log(response);
+        setInputText(""); // Clear the input field after submitting the form
+      });
     setInputText("");
     //To clear the task written in text container
   };
@@ -32,7 +42,7 @@ function TodoInput(props) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link to="/home">Home</Link>
+            <NavLink href="/home">Todo-History</NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -49,7 +59,7 @@ function TodoInput(props) {
             setInputText(e.target.value);
           }}
         />
-        <button className="add-btn" onClick={handleAddClick}>
+        <button className="add-btn" onClick={handleSubmitClick}>
           Add Task
         </button>
       </div>
