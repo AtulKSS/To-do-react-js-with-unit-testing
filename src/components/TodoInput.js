@@ -23,11 +23,10 @@ function TodoInput(props) {
       "https://6433e738582420e2316e849e.mockapi.io/crud",{
         text : inputText,
       })
-      .then((response) => {
-        console.log(response);
-        setInputText(""); // Clear the input field after submitting the form
-      });
-    setInputText("");
+      // .then(() => {
+      //   setInputText(""); // Clear the input field after submitting the form
+      //});
+      setInputText("");
     //To clear the task written in text container
   };
 
@@ -67,8 +66,7 @@ function TodoInput(props) {
         <div className="error" style={{ color: "red" }}>
           {todo.error}
         </div>
-      )}
-      
+      )} 
     </div>
   );
 }

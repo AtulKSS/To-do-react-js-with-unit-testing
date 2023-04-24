@@ -8,14 +8,8 @@ function Todolist(props) {
   const [showEditConfirmation, setShowEditConfirmation] = useState(false);
 
   const handleInputChange = (event) => {  //updates the newValue state to the current value of the input field, helps us to see what we are tying
-    setNewValue(event.target.value); //event.target.value expression retrieves the current value of the input field
+    //setNewValue(event.target.value); //event.target.value expression retrieves the current value of the input field
   };
-
-  // const handleEditClick = () => {
-  //   if (window.confirm('Are you sure you want to edit this item?')) {
-  //     setEditMode(true);
-  //   }
-  // };
 
   const handleDeleteClick = () => {
     setShowDeleteConfirmation(true);
@@ -56,15 +50,15 @@ function Todolist(props) {
   };
 
   return (
-    <li className="list-item" style={{ position: 'relative', marginBottom: '10px' }}>
+    <li className="list-item" data-testid="click-on-box" style={{ position: 'relative', marginBottom: '10px' }}>
       {!editMode && (
         <>
           {props.item}
           <span className="icons">
-            <i className="fa-solid fa-trash-can icon-delete" onClick={handleDeleteClick}></i>
+            <i className="fa-solid fa-trash-can icon-delete" data-testid="delete-icon" onClick={handleDeleteClick}></i>
           </span>
           <span className="iconss">
-            <i className="fa-solid fa-pen-to-square" onClick={handleEditClick}></i>
+            <i className="fa-solid fa-pen-to-square" data-testid="edit-icon" onClick={handleEditClick}></i>
           </span>
           {todo.error && (
             <div className="error" style={{ position: 'absolute', top: '100%' }}>
@@ -74,37 +68,37 @@ function Todolist(props) {
         </>
       )}
       {editMode && (
-        <>
-          <input type="text" value={newValue} onChange={handleInputChange} />
+        <li> 
+          <input type="text" value={newValue} data-testid="edit-input-check" onChange={handleInputChange} />
           <span className="icons">
-            <i className="fa-solid fa-check" onClick={handleSaveClick}></i>
+            <i className="fa-solid fa-check"  onClick={handleSaveClick}></i>
           </span>
           {todo.error && (
             <div className="error" style={{ position: 'absolute', top: '100%' }}>
               {todo.error}
             </div>
           )}
-        </>
+        </li>
       )}
       {showDeleteConfirmation && (
-        <div className="delete-confirmation">
+        <div className="delete-confirmation" data-testid="delete-confirmation">
           <div className="confirmation-box">
             <p>Are you sure you want to delete this item?</p>
             <div className="confirmation-buttons">
-              <button onClick={handleDeleteConfirm}>Yes</button>
-              <button onClick={handleDeleteCancel}>No</button>
+              <button onClick={handleDeleteConfirm} data-testid="delete-confirmation-yes" >Yes</button>
+              <button onClick={handleDeleteCancel} data-testid="delete-confirmation-no" >No</button>
             </div>
           </div>
         </div>
       )}
       {showEditConfirmation && (
         <div className="confirmation-overlay">
-          <div className="edit-confirmation">
+          <div className="edit-confirmation" data-testid="edit-confirmation">
             <div className="confirmation-box">
               <p>Are you sure you want to edit this item?</p>
               <div className="confirmation-buttons">
-                <button onClick={handleEditConfirm}>Yes</button>
-                <button onClick={handleEditCancel}>No</button>
+                <button onClick={handleEditConfirm} data-testid="edit-confirmation-yes" >Yes</button>
+                <button onClick={handleEditCancel} data-testid="edit-confirmation-no" >No</button>
               </div>
             </div>
           </div>
